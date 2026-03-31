@@ -150,7 +150,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie09_TrzyNajnowszeZapisy()
     {
-        throw Niezaimplementowano(nameof(Zadanie09_TrzyNajnowszeZapisy));
+        return DaneUczelni.Zapisy
+            .OrderByDescending(z => z.DataZapisu)
+            .Select(z => $"{z.DataZapisu.ToShortDateString()} id_stud: {z.StudentId} id_przedmiotu: {z.PrzedmiotId}")
+            .Take(3);
     }
 
     /// <summary>
