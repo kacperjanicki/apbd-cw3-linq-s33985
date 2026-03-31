@@ -132,7 +132,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie08_UnikalneMiastaStudentow()
     {
-        throw Niezaimplementowano(nameof(Zadanie08_UnikalneMiastaStudentow));
+        return DaneUczelni.Studenci
+            .OrderBy(p => p.Miasto)
+            .Select(p => p.Miasto)
+            .Distinct();
     }
 
     /// <summary>
