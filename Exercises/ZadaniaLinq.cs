@@ -98,7 +98,11 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie06_CzyWszyscyProwadzacyMajaKatedre()
     {
-        throw Niezaimplementowano(nameof(Zadanie06_CzyWszyscyProwadzacyMajaKatedre));
+                
+        return DaneUczelni.Prowadzacy
+            .Select(p => new {p.Imie, p.Nazwisko, p.Katedra})
+            .AsEnumerable()
+            .Select(p => $"{p.Imie} {p.Nazwisko} {p.Katedra} {(p.Katedra.Length > 0 ? "=> Ma uzupełnioną nazwe katedry" : "=> Nie ma uzupełnioną nazwe katedry")}");
     }
 
     /// <summary>
