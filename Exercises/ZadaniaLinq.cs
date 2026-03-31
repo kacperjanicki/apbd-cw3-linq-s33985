@@ -116,7 +116,9 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie07_LiczbaAktywnychZapisow()
     {
-        throw Niezaimplementowano(nameof(Zadanie07_LiczbaAktywnychZapisow));
+        var count = DaneUczelni.Zapisy.Count(p => p.CzyAktywny);
+        return new List<string> { count.ToString() };
+
     }
 
     /// <summary>
