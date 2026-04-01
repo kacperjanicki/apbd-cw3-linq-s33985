@@ -370,7 +370,7 @@ public sealed class ZadaniaLinq
     {
         return DaneUczelni.Przedmioty
             .Where(p => p.DataStartu.Month == 4 && p.DataStartu.Year == 2026)
-            . Join(
+            .Join(
                 DaneUczelni.Zapisy,
                 p => p.Id,
                 z => z.PrzedmiotId,
@@ -415,7 +415,17 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Wyzwanie04_MiastaILiczbaAktywnychZapisow()
     {
-        throw Niezaimplementowano(nameof(Wyzwanie04_MiastaILiczbaAktywnychZapisow));
+        return DaneUczelni.Studenci
+            .Join(
+                DaneUczelni.Zapisy,
+                s => s.Id,
+                z => z.StudentId,
+                (s, z) => new { s.Miasto, z.CzyAktywny }
+            )
+            .Where(x => x.CzyAktywny)
+            .GroupBy(g => g.Miasto)
+            .OrderByDescending(g => g.Count())
+            .Select(g => $"{g.Key} {g.Count()}");
     }
 
     private static NotImplementedException Niezaimplementowano(string nazwaMetody)
