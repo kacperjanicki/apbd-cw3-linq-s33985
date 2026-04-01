@@ -292,6 +292,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie15_ProwadzacyILiczbaPrzedmiotow()
     {
+        // TODO
         throw Niezaimplementowano(nameof(Zadanie15_ProwadzacyILiczbaPrzedmiotow));
     }
 
@@ -335,7 +336,16 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Wyzwanie01_StudenciZWiecejNizJednymAktywnymPrzedmiotem()
     {
-        throw Niezaimplementowano(nameof(Wyzwanie01_StudenciZWiecejNizJednymAktywnymPrzedmiotem));
+        return DaneUczelni.Studenci.Join(
+                DaneUczelni.Zapisy,
+                s => s.Id,
+                z => z.StudentId,
+                (s,z) => (s,z)
+            )
+            .Where(pair => pair.z.CzyAktywny)
+            .GroupBy(pair => (pair.s.Imie, pair.s.Nazwisko))
+            .Where(g => g.Count() > 1)
+            .Select(g => $"{g.Key.Imie} {g.Key.Nazwisko} {g.Count()}");
     }
 
     /// <summary>
